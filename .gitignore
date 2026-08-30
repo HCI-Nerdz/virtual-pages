@@ -11,6 +11,12 @@ dist/
 !vite.config.ts
 !tsconfig.json
 !index.html
+!edge/
+!edge/**
+!preview/
+!preview/**
+!contrast/
+!contrast/**
 !src/
 !src/**
 !.github/

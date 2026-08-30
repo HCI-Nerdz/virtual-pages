@@ -13,7 +13,7 @@ Org catalog: https://hci-nerdz.github.io/demos/
 
 ## Related ideas
 
-Sibling HCI-Nerdz desk: **Edge Bar** (repo `context-rails`) — edge-summoned ecosystem nav. A possible umbrella name for both is **context edges** (edge as persistent context chrome). Repos stay separate; do not rename.
+Sibling HCI-Nerdz desk: **Context Edge** (repo `context-edge`) — edge-summoned ecosystem nav. A possible umbrella name for both is **context edges** (edge as persistent context chrome). Repos stay separate; do not rename.
 
 ## Hub UX (multi-variant)
 

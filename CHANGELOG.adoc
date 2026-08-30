@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-08-30 -- Selector hub with separate variant pages
+
+* Landing page is a selector only; Edge / Preview / Contrast each have their own URL (`/edge/`, `/preview/`, `/contrast/`).
+* Identity trail includes intermediates: `HCI Nerdz / Demos / virtual-pages [/ variant]`.
+* Legacy `#/edge` (etc.) hashes redirect to the real pages.
+
 == 2026-08-30 -- Mockups live inside the tabs
 
 * Per-variant mockups are part of each tab face (label + preview + caption), not a second row above the content.

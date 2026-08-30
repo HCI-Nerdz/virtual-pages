@@ -17,7 +17,9 @@ Sibling HCI-Nerdz desk: **Context Edge** (repo `context-edge`) — edge-summoned
 
 ## Hub UX (multi-variant)
 
-Tab bar + compact per-variant mockups (clickable); demo zone stays a placeholder until chosen. Pattern recorded in skill `demo-site-wiring`.
+Selector landing with clickable mockup tiles → **separate variant pages** (`/edge/`, `/preview/`, `/contrast/`). No interactive desk on the hub. Pattern in skill `demo-site-wiring` (Context Edge–style).
+
+Identity strip trail: `HCI Nerdz / Demos / virtual-pages [/ variant]`.
 
 ## Stakeholders
 
@@ -29,9 +31,11 @@ Tab bar + compact per-variant mockups (clickable); demo zone stays a placeholder
 
 ## Demo routes
 
-- `#/` — hub only (placeholder until a variant is chosen)
-- `#/edge` — edge layers
-- `#/preview` — preview stack
-- `#/contrast` — flat mega-panel
+- `/` — selector hub only
+- `/edge/` — edge layers
+- `/preview/` — preview stack
+- `/contrast/` — flat mega-panel
+
+Legacy `#/edge` (etc.) hashes redirect to the real pages.
 
 Default deep link path in interactive variants: return flow under Orders (`return-1042`).

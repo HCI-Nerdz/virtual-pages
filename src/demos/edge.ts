@@ -47,15 +47,14 @@ function choiceList(node: DecisionNode): string {
     .join("")}</ul>`;
 }
 
-function pageFace(node: DecisionNode, path: DecisionPath, opts?: { interactive?: boolean }): string {
-  const interactive = opts?.interactive !== false;
+function pageFace(node: DecisionNode, path: DecisionPath): string {
   return `<div class="vp-page-face" data-tone="${node.tone ?? "branch"}">
     ${breadcrumbHtml(path)}
     ${routeLine(node)}
     <p class="vp-prompt">${escapeHtml(node.prompt)}</p>
     <h2 class="vp-page-title">${escapeHtml(node.title)}</h2>
     <p class="vp-body">${escapeHtml(node.body)}</p>
-    ${interactive ? choiceList(node) : `<p class="vp-edge-hint">Parent context — click this edge to return here.</p>`}
+    ${choiceList(node)}
   </div>`;
 }
 
@@ -66,18 +65,28 @@ function edgeParents(path: DecisionPath): DecisionPath {
   return parents.slice(-2);
 }
 
-export function edgeStageShell(): string {
-  return `<div class="market-shell">
-  <header class="market-top">
-    <span class="market-mark">Northbazaar</span>
-    <span class="market-links">Deals · Cart · Help</span>
-    <span class="market-note">Marketing chrome — outside the armed zone</span>
-  </header>
-  <div class="armed-zone" aria-label="Armed virtual-pages subtree">
-    <p class="armed-label">Armed subtree · decision backbone</p>
-    <div class="edge-stage" id="edge-stage"></div>
+/** Facsimile app frame — virtual pages stay inside this clip, not over the HCI demo hub. */
+export function facsimileShell(inner: string): string {
+  return `<div class="facsimile-desk">
+  <p class="facsimile-caption">Simulated app viewport — virtual pages are clipped here, not over the demo hub</p>
+  <div class="facsimile-bezel">
+    <div class="market-shell">
+      <header class="market-top">
+        <span class="market-mark">Northbazaar</span>
+        <span class="market-links">Deals · Cart · Help</span>
+        <span class="market-note">Marketing chrome — outside the armed zone</span>
+      </header>
+      ${inner}
+    </div>
   </div>
 </div>`;
+}
+
+export function edgeStageShell(): string {
+  return facsimileShell(`<div class="armed-zone" aria-label="Armed virtual-pages subtree">
+    <p class="armed-label">Armed subtree · decision backbone · parent edges only</p>
+    <div class="edge-stage" id="edge-stage"></div>
+  </div>`);
 }
 
 export function renderEdgeStack(cursor: DecisionCursor, mount: HTMLElement) {
@@ -87,15 +96,16 @@ export function renderEdgeStack(cursor: DecisionCursor, mount: HTMLElement) {
     const layers = parents
       .map((n, i) => {
         const depthFromFront = parents.length - i;
-        const parentPath = path.slice(0, path.indexOf(n) + 1);
-        return `<button type="button" class="vp-edge-layer" data-goto="${n.id}" data-depth="${depthFromFront}" aria-label="Back to ${escapeHtml(n.title)}">
-          ${pageFace(n, parentPath, { interactive: false })}
+        return `<button type="button" class="vp-edge-layer" data-goto="${n.id}" data-depth="${depthFromFront}" title="Back to ${escapeHtml(n.title)}" aria-label="Back to ${escapeHtml(n.title)}">
+          <span class="vp-edge-tab">${escapeHtml(n.shortTitle)}</span>
+          <span class="vp-edge-sheet" aria-hidden="true" data-tone="${n.tone ?? "branch"}"></span>
         </button>`;
       })
       .join("");
 
-    mount.innerHTML = `<div class="vp-edge-stack" data-depth="${path.length}">
-      ${layers}
+    const peekCount = parents.length;
+    mount.innerHTML = `<div class="vp-edge-stack" data-depth="${path.length}" data-peeks="${peekCount}">
+      <div class="vp-edge-rail" aria-hidden="${peekCount ? "false" : "true"}">${layers}</div>
       <div class="vp-edge-front" data-tone="${current.tone ?? "branch"}">
         ${pageFace(current, path)}
         ${

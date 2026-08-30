@@ -1,5 +1,7 @@
 /** Shared demo hub chrome — hash routes under Vite base. */
 
+import introAnchorSvg from "../assets/intro-anchor.svg?raw";
+
 export type DemoRoute = "edge" | "preview" | "contrast";
 
 const DEMOS_INDEX = "https://hci-nerdz.github.io/demos/";
@@ -13,9 +15,8 @@ const SUITE_LEDE =
   "so you do not pay a document round-trip per click. Soft and hard loads share the same stack chrome. " +
   "Arm this on a route subtree (settings, account) while marketing chrome stays outside.";
 
-const INTRO_ANCHOR_SRC = `${import.meta.env.BASE_URL}intro-anchor.svg`;
 const INTRO_ANCHOR_ALT =
-  "Layered virtual pages: Account and Orders peek from the left behind the current Return page, with an in-page breadcrumb";
+  "Simulated app frame: thin Orders and #1042 edge tabs beside the Return page, with breadcrumb and soft-route badge";
 
 interface RouteMeta {
   id: DemoRoute;
@@ -30,15 +31,15 @@ const ROUTES: RouteMeta[] = [
     label: "Edge layers",
     title: "Edge-layered virtual pages",
     blurb:
-      "Parent steps sit as shadowed page edges behind the current surface. Breadcrumb lives inside the front page so the outer zone stays calm. " +
-      "Click a left edge or a crumb to climb one or more levels. Only one or two parents show as edges — enough for orientation, not a full history mural.",
+      "Inside a clipped simulated app frame: parent steps show as thin left-edge tabs (not full blank sheets). Breadcrumb lives on the front page. " +
+      "Click an edge tab or crumb to climb. Only one or two parents peek — orientation, not a history mural.",
   },
   {
     id: "preview",
     label: "Preview stack",
     title: "Top-bar preview stack",
     blurb:
-      "One virtual page in the stage; ancestors live as rounded preview cards stacked left→right in the top bar (earliest at the bottom of the z-stack). " +
+      "Same facsimile frame. One virtual page in the stage; ancestors live as rounded preview cards stacked left→right in the top bar (earliest at the bottom of the z-stack). " +
       "Hover raises that card and drops a dark veil so later cards hide without shifting layout. Click a card to jump.",
   },
   {
@@ -83,8 +84,8 @@ export function hubHtml(active: DemoRoute): string {
     <a class="vcs-link" href="${REPO_URL}" title="GitHub repository" aria-label="GitHub: ${REPO_LABEL}">${GITHUB_MARK}<span class="vcs-label">GitHub</span></a>
   </p>
   <p class="demo-suite-lede">${SUITE_LEDE}</p>
-  <figure class="demo-intro-anchor">
-    <img src="${INTRO_ANCHOR_SRC}" width="960" height="540" alt="${INTRO_ANCHOR_ALT}" loading="eager" decoding="async" />
+  <figure class="demo-intro-anchor" aria-label="${INTRO_ANCHOR_ALT}">
+    ${introAnchorSvg}
   </figure>
   <div class="demo-variants" role="navigation" aria-label="Virtual page variants">${links}</div>
   <h1 class="demo-hub-title">${meta.title}</h1>

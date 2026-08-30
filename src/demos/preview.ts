@@ -1,5 +1,6 @@
 import type { DecisionCursor } from "../core/cursor";
 import type { DecisionNode, DecisionPath } from "../core/types";
+import { facsimileShell } from "./edge";
 
 function escapeHtml(s: string): string {
   return s
@@ -44,20 +45,13 @@ function choiceList(node: DecisionNode): string {
 }
 
 export function previewStageShell(): string {
-  return `<div class="market-shell">
-  <header class="market-top">
-    <span class="market-mark">Northbazaar</span>
-    <span class="market-links">Deals · Cart · Help</span>
-    <span class="market-note">Marketing chrome — outside the armed zone</span>
-  </header>
-  <div class="armed-zone" aria-label="Armed virtual-pages subtree">
+  return facsimileShell(`<div class="armed-zone" aria-label="Armed virtual-pages subtree">
     <p class="armed-label">Armed subtree · preview stack in the top bar</p>
     <div class="preview-stage" id="preview-stage"></div>
-  </div>
-</div>`;
+  </div>`);
 }
 
-function previewCard(node: DecisionNode, index: number, total: number): string {
+function previewCard(node: DecisionNode, index: number): string {
   const z = index + 1;
   const offset = index * 14;
   return `<button type="button" class="vp-preview-card" data-goto="${node.id}" data-index="${index}" style="--z:${z};--x:${offset}px" aria-label="Jump to ${escapeHtml(node.title)}">
@@ -74,7 +68,7 @@ export function renderPreviewStack(cursor: DecisionCursor, mount: HTMLElement) {
   const paint = (path: DecisionPath) => {
     const current = path[path.length - 1];
     const ancestors = path.slice(0, -1);
-    const cards = ancestors.map((n, i) => previewCard(n, i, ancestors.length)).join("");
+    const cards = ancestors.map((n, i) => previewCard(n, i)).join("");
 
     mount.innerHTML = `<div class="vp-preview-layout">
       <div class="vp-preview-bar" id="preview-bar" aria-label="Ancestor page previews">

@@ -1,4 +1,5 @@
 import type { DecisionTree } from "../core/types";
+import { facsimileShell } from "./edge";
 
 function escapeHtml(s: string): string {
   return s
@@ -24,15 +25,8 @@ export function contrastHtml(tree: DecisionTree): string {
     })
     .join("");
 
-  return `<div class="market-shell">
-  <header class="market-top">
-    <span class="market-mark">Northbazaar</span>
-    <span class="market-links">Deals · Cart · Help</span>
-    <span class="market-note">Same tree — flat presentation</span>
-  </header>
-  <div class="flat-bleed" aria-label="Flat settings contrast">
+  return facsimileShell(`<div class="flat-bleed" aria-label="Flat settings contrast">
     <p class="flat-warn">Contrast mode: every node visible at once — the mega-directory pattern. Same destinations can be soft-routed as virtual pages without multiplying full document loads; hard loads (PDF, armed-zone entry) still join the same stack.</p>
     <div class="flat-grid">${sections}</div>
-  </div>
-</div>`;
+  </div>`);
 }

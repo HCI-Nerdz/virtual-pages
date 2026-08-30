@@ -92,15 +92,11 @@ function mockPreviewHtml(id: DemoRoute): string {
   </span>`;
 }
 
-function tabBarHtml(active: SelectedRoute): string {
+function chooserHtml(active: SelectedRoute): string {
   const tabs = ROUTES.map((r) => {
     const selected = r.id === active;
     return `<a class="demo-tab${selected ? " is-active" : ""}" role="tab" href="#/${r.id}" data-route="${r.id}" aria-selected="${selected}" id="tab-${r.id}">${r.label}</a>`;
   }).join("");
-  return `<div class="demo-tabbar" role="tablist" aria-label="Virtual page variants">${tabs}</div>`;
-}
-
-function mockupGridHtml(active: SelectedRoute): string {
   const tiles = ROUTES.map((r) => {
     const selected = r.id === active;
     return `<a class="demo-mock-tile${selected ? " is-active" : ""}" href="#/${r.id}" data-route="${r.id}" aria-current="${selected ? "true" : "false"}">
@@ -109,7 +105,10 @@ function mockupGridHtml(active: SelectedRoute): string {
       <span>${r.mockCaption}</span>
     </a>`;
   }).join("");
-  return `<nav class="demo-mock-grid" aria-label="Variant mockups">${tiles}</nav>`;
+  return `<div class="demo-chooser">
+  <div class="demo-tabbar" role="tablist" aria-label="Virtual page variants">${tabs}</div>
+  <nav class="demo-mock-grid" aria-label="Variant mockups">${tiles}</nav>
+</div>`;
 }
 
 export function placeholderStage(): string {
@@ -145,8 +144,7 @@ export function hubHtml(active: SelectedRoute, previewModesHtml = ""): string {
     <a class="vcs-link" href="${REPO_URL}" title="GitHub repository" aria-label="GitHub: ${REPO_LABEL}">${GITHUB_MARK}<span class="vcs-label">GitHub</span></a>
   </p>
   <p class="demo-suite-lede">${SUITE_LEDE}</p>
-  ${tabBarHtml(active)}
-  ${mockupGridHtml(active)}
+  ${chooserHtml(active)}
   ${metaBlock}
 </header>`;
 }

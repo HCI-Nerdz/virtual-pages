@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-08-30 -- Variant tabs align with mockups
+
+* Tab bar uses the same three-column grid as the mockup tiles so each tab lines up with its card.
+* Inactive tabs keep tab chrome (muted fill, top radius, track) instead of reading as flat pills.
+
 == 2026-08-30 -- Preview modes outside facsimile
 
 * Snippets / Screenshots toggle moved from inside the Northbazaar preview page to hub chrome above the demo zone.

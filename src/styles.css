@@ -61,7 +61,7 @@ button {
 .demo-hub {
   max-width: 1080px;
   margin: 0 auto;
-  padding: 1.1rem 1.25rem 0.4rem;
+  padding: 1.1rem 1.25rem 0;
 }
 
 .demo-identity {
@@ -127,15 +127,14 @@ button {
   color: #aebcc6;
 }
 
-/* Chooser: tab columns share the mockup grid template so tab N lines up with tile N */
+/* Chooser: each tab owns its mockup (chooser chrome, not swapped content) */
 .demo-chooser {
   --chooser-cols: repeat(3, minmax(0, 1fr));
   --chooser-gap: 0.75rem;
   --chooser-tile-max: 20rem;
-  margin: 0 0 1rem;
+  margin: 0;
 }
 
-/* Real tab bar (connected track; inactive tabs keep tab chrome) */
 .demo-tabbar {
   display: grid;
   grid-template-columns: var(--chooser-cols);
@@ -144,41 +143,38 @@ button {
   padding: 0;
   border-bottom: 1px solid #355560;
   justify-items: start;
+  align-items: stretch;
 }
 
 .demo-tab {
   position: relative;
   box-sizing: border-box;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 0.4rem;
   width: 100%;
   max-width: var(--chooser-tile-max);
-  padding: 0.55rem 0.85rem 0.65rem;
+  padding: 0.55rem 0.55rem 0.7rem;
   margin-bottom: -1px;
-  color: #9eb0ba;
+  color: inherit;
   text-decoration: none;
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 0.88rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  text-align: left;
   border: 1px solid #2a4450;
   border-bottom: none;
-  border-radius: 8px 8px 0 0;
+  border-radius: 10px 10px 0 0;
   background: #14232b;
   box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.25);
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .demo-tab:hover {
-  color: #e2eef2;
   background: #1a2e38;
   border-color: #355560;
+  color: inherit;
 }
 
 .demo-tab.is-active {
   z-index: 1;
-  color: #e8f7f3;
   background: var(--desk-lift);
   border-color: #355560;
   border-bottom-color: var(--desk-lift);
@@ -188,58 +184,47 @@ button {
 .demo-tab.is-active::after {
   content: "";
   position: absolute;
-  left: 0.85rem;
-  right: 0.85rem;
+  left: 0.55rem;
+  right: 0.55rem;
   bottom: 0;
   height: 2px;
   background: var(--sea-bright);
   border-radius: 2px 2px 0 0;
 }
 
-/* Compact per-variant mockups (~3 columns; fixed tile width when stacked) */
-.demo-mock-grid {
-  display: grid;
-  grid-template-columns: var(--chooser-cols);
-  gap: var(--chooser-gap);
-  margin: 0.85rem 0 0;
-  justify-items: start;
-}
-
-.demo-mock-tile {
-  display: grid;
-  gap: 0.35rem;
-  width: 100%;
-  max-width: var(--chooser-tile-max);
-  padding: 0.5rem 0.5rem 0.65rem;
-  border: 1px solid #2f4a54;
-  border-radius: 10px;
-  background: var(--desk-lift);
-  color: inherit;
-  text-decoration: none;
-  transition: border-color 0.15s ease, transform 0.15s ease;
-}
-
-.demo-mock-tile:hover {
-  border-color: var(--sea);
-  transform: translateY(-2px);
-  color: inherit;
-}
-
-.demo-mock-tile.is-active {
-  border-color: var(--sea-bright);
-  box-shadow: 0 0 0 1px rgba(45, 184, 164, 0.35);
-}
-
-.demo-mock-tile strong {
+.demo-tab-label {
+  display: block;
   font-family: var(--font-display);
-  font-size: 0.9rem;
-  color: #eef5f8;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: center;
+  color: #9eb0ba;
 }
 
-.demo-mock-tile > span:last-child {
+.demo-tab:hover .demo-tab-label,
+.demo-tab.is-active .demo-tab-label {
+  color: #e8f7f3;
+}
+
+.demo-tab-caption {
+  display: block;
   font-size: 0.78rem;
-  color: #8aa0aa;
   line-height: 1.35;
+  color: #8aa0aa;
+  text-align: center;
+}
+
+/* Tabpanel: first region whose content actually changes with selection */
+.demo-tab-region {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 1rem 1.25rem 0.5rem;
+}
+
+.demo-tab-region[role="tabpanel"] {
+  padding-top: 1.15rem;
+  background: linear-gradient(180deg, rgba(22, 40, 50, 0.55) 0%, transparent 7rem);
 }
 
 .vp-mock-preview {
@@ -251,6 +236,7 @@ button {
   border: 1px solid #3a5560;
   background: #0a141a;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .vp-mock-edge {
@@ -380,9 +366,8 @@ button {
 }
 
 .demo-stage {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: 0 1.25rem 2.5rem;
+  margin: 0;
+  padding: 0 0 1.75rem;
 }
 
 .demo-placeholder {
@@ -1161,23 +1146,22 @@ button {
   }
 
   .demo-tabbar {
-    /* Keep a horizontal tab strip on narrow viewports; tiles stack below */
+    /* Keep a horizontal row of tabs on narrow viewports when space allows */
     --chooser-cols: repeat(3, minmax(0, 1fr));
     gap: 0.35rem;
   }
 
   .demo-tab {
-    padding: 0.45rem 0.45rem 0.55rem;
+    padding: 0.4rem 0.35rem 0.55rem;
+    gap: 0.3rem;
+  }
+
+  .demo-tab-label {
     font-size: 0.78rem;
   }
 
-  .demo-mock-grid {
-    justify-items: start;
-  }
-
-  .demo-mock-tile {
-    /* Keep the same footprint as one desktop 3-column tile */
-    max-width: var(--chooser-tile-max);
+  .demo-tab-caption {
+    font-size: 0.7rem;
   }
 }
 

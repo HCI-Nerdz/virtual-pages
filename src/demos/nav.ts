@@ -94,47 +94,47 @@ function mockPreviewHtml(id: DemoRoute): string {
   </span>`;
 }
 
+/**
+ * Mockups live inside the tab controls (they select a variant; they are not
+ * swapped for different content). The tabpanel starts below, where title /
+ * blurb / desk actually change.
+ */
 function chooserHtml(active: SelectedRoute): string {
   const tabs = ROUTES.map((r) => {
     const selected = r.id === active;
-    return `<a class="demo-tab${selected ? " is-active" : ""}" role="tab" href="#/${r.id}" data-route="${r.id}" aria-selected="${selected}" id="tab-${r.id}">${r.label}</a>`;
-  }).join("");
-  const tiles = ROUTES.map((r) => {
-    const selected = r.id === active;
-    return `<a class="demo-mock-tile${selected ? " is-active" : ""}" href="#/${r.id}" data-route="${r.id}" aria-current="${selected ? "true" : "false"}">
+    return `<a class="demo-tab${selected ? " is-active" : ""}" role="tab" href="#/${r.id}" data-route="${r.id}" aria-selected="${selected}" id="tab-${r.id}">
+      <span class="demo-tab-label">${r.label}</span>
       ${mockPreviewHtml(r.id)}
-      <strong>${r.label}</strong>
-      <span>${r.mockCaption}</span>
+      <span class="demo-tab-caption">${r.mockCaption}</span>
     </a>`;
   }).join("");
   return `<div class="demo-chooser">
   <div class="demo-tabbar" role="tablist" aria-label="Virtual page variants">${tabs}</div>
-  <nav class="demo-mock-grid" aria-label="Variant mockups">${tiles}</nav>
 </div>`;
 }
 
 export function placeholderStage(): string {
   return `<div class="demo-placeholder" role="status">
     <p class="demo-placeholder-title">Pick a variant</p>
-    <p class="demo-placeholder-body">Choose a tab or mockup above to load the interactive desk.</p>
+    <p class="demo-placeholder-body">Choose a tab above to load the interactive desk.</p>
   </div>`;
 }
 
-export function hubHtml(active: SelectedRoute, previewModesHtml = ""): string {
-  const metaBlock =
-    active == null
-      ? `<p class="demo-choose-hint">Select a variant to open its interactive desk below.</p>`
-      : (() => {
-          const meta = routeMeta(active);
-          const modes =
-            active === "preview" && previewModesHtml
-              ? `<div class="demo-preview-modes-row">${previewModesHtml}</div>`
-              : "";
-          return `<h1 class="demo-hub-title" id="panel-${active}">${meta.title}</h1>
+function panelMetaHtml(active: SelectedRoute, previewModesHtml = ""): string {
+  if (active == null) {
+    return `<p class="demo-choose-hint">Select a variant to open its interactive desk below.</p>`;
+  }
+  const meta = routeMeta(active);
+  const modes =
+    active === "preview" && previewModesHtml
+      ? `<div class="demo-preview-modes-row">${previewModesHtml}</div>`
+      : "";
+  return `<h1 class="demo-hub-title">${meta.title}</h1>
   <p class="demo-variant-lede">${meta.blurb}</p>
   ${modes}`;
-        })();
+}
 
+export function hubHtml(active: SelectedRoute): string {
   return `<header class="demo-hub" role="banner">
   <p class="demo-identity">
     <a href="${DEMOS_INDEX}">${ORG_LABEL}</a>
@@ -147,14 +147,16 @@ export function hubHtml(active: SelectedRoute, previewModesHtml = ""): string {
   </p>
   <p class="demo-suite-lede">${SUITE_LEDE}</p>
   ${chooserHtml(active)}
-  ${metaBlock}
 </header>`;
 }
 
 export function wrapDemo(active: SelectedRoute, body: string, previewModesHtml = ""): string {
-  const panel =
+  const panelAttrs =
     active == null
-      ? ""
-      : ` role="tabpanel" aria-labelledby="tab-${active}" id="panel-body-${active}"`;
-  return `${hubHtml(active, previewModesHtml)}<main class="demo-stage" data-demo="${active ?? "none"}"${panel}>${body}</main>`;
+      ? ` class="demo-tab-region" data-demo="none"`
+      : ` class="demo-tab-region" role="tabpanel" aria-labelledby="tab-${active}" id="panel-${active}" data-demo="${active}"`;
+  return `${hubHtml(active)}<section${panelAttrs}>
+  ${panelMetaHtml(active, previewModesHtml)}
+  <div class="demo-stage">${body}</div>
+</section>`;
 }

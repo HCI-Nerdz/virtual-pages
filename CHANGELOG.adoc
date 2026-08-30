@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-08-30 -- Mockups live inside the tabs
+
+* Per-variant mockups are part of each tab face (label + preview + caption), not a second row above the content.
+* The tabpanel starts below the chooser — variant title, blurb, and interactive desk are the changing content.
+
 == 2026-08-30 -- Identity strip is site nav only
 
 * Hub breadcrumb `HCI-Nerdz / virtual-pages`: org → demos index, repo → this demo's site home (not GitHub).

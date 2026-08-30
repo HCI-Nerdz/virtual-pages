@@ -40,7 +40,8 @@ const ROUTES: RouteMeta[] = [
     title: "Top-bar preview stack",
     blurb:
       "Ancestors sit in the top bar as preview cards — lined up when there is room, Cover Flow–style overlap when the bar fills. " +
-      "Toggle Snippets vs Screenshots. Hover lifts z-index with a modest shadow. Arrows between cards hint at hierarchy. Click a card to jump.",
+      "Hover lifts z-index with a modest shadow. Arrows between cards hint at hierarchy. Click a card to jump. " +
+      "Use Snippets vs Screenshots below to change what each card shows — that control stays outside the product facsimile.",
     mockCaption: "Ancestor cards in a top-bar stack",
   },
   {
@@ -118,14 +119,19 @@ export function placeholderStage(): string {
   </div>`;
 }
 
-export function hubHtml(active: SelectedRoute): string {
+export function hubHtml(active: SelectedRoute, previewModesHtml = ""): string {
   const metaBlock =
     active == null
       ? `<p class="demo-choose-hint">Select a variant to open its interactive desk below.</p>`
       : (() => {
           const meta = routeMeta(active);
+          const modes =
+            active === "preview" && previewModesHtml
+              ? `<div class="demo-preview-modes-row">${previewModesHtml}</div>`
+              : "";
           return `<h1 class="demo-hub-title" id="panel-${active}">${meta.title}</h1>
-  <p class="demo-variant-lede">${meta.blurb}</p>`;
+  <p class="demo-variant-lede">${meta.blurb}</p>
+  ${modes}`;
         })();
 
   return `<header class="demo-hub" role="banner">
@@ -145,10 +151,10 @@ export function hubHtml(active: SelectedRoute): string {
 </header>`;
 }
 
-export function wrapDemo(active: SelectedRoute, body: string): string {
+export function wrapDemo(active: SelectedRoute, body: string, previewModesHtml = ""): string {
   const panel =
     active == null
       ? ""
       : ` role="tabpanel" aria-labelledby="tab-${active}" id="panel-body-${active}"`;
-  return `${hubHtml(active)}<main class="demo-stage" data-demo="${active ?? "none"}"${panel}>${body}</main>`;
+  return `${hubHtml(active, previewModesHtml)}<main class="demo-stage" data-demo="${active ?? "none"}"${panel}>${body}</main>`;
 }

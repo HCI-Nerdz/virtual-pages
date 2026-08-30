@@ -1,5 +1,9 @@
 = Changelog
 
+== 2026-08-30 -- Preview modes outside facsimile
+
+* Snippets / Screenshots toggle moved from inside the Northbazaar preview page to hub chrome above the demo zone.
+
 == 2026-08-30 -- Compact left-aligned mockup tiles
 
 * Variant mockup tiles keep a ~one-third desktop width (`max-width: 20rem`) and left-align when the grid stacks on narrow viewports.

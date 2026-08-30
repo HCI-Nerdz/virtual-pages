@@ -333,6 +333,33 @@ button {
   color: #a5b5bf;
 }
 
+.demo-preview-modes-row {
+  margin: 0 0 1rem;
+}
+
+.demo-preview-modes-row .vp-preview-modes {
+  border-color: rgba(61, 155, 143, 0.45);
+  background: rgba(14, 22, 28, 0.85);
+}
+
+.demo-preview-modes-row .vp-preview-mode {
+  color: #9aa8a0;
+}
+
+.demo-preview-modes-row .vp-preview-mode:hover {
+  color: #e8e4d9;
+  background: rgba(61, 155, 143, 0.18);
+}
+
+.demo-preview-modes-row .vp-preview-mode.active {
+  background: #3d9b8f;
+  color: #f4f1e8;
+}
+
+.demo-preview-modes-row .vp-preview-mode + .vp-preview-mode {
+  border-left-color: rgba(61, 155, 143, 0.45);
+}
+
 .demo-stage {
   max-width: 1080px;
   margin: 0 auto;

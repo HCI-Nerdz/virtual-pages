@@ -3,12 +3,35 @@ import { marketplaceSettingsTree } from "./core/marketplace-tree";
 import { contrastHtml } from "./demos/contrast";
 import { edgeStageShell, renderEdgeStack } from "./demos/edge";
 import { parseRoute, placeholderStage, wrapDemo, type SelectedRoute } from "./demos/nav";
-import { previewStageShell, renderPreviewStack } from "./demos/preview";
+import {
+  previewContentModeToggleHtml,
+  previewStageShell,
+  renderPreviewStack,
+  setPreviewContentMode,
+  type PreviewContentMode,
+} from "./demos/preview";
 
-const app = document.querySelector("#app");
-if (!app) throw new Error("#app missing");
+const appEl = document.querySelector("#app");
+if (!appEl) throw new Error("#app missing");
+const app = appEl;
 
 let unsub: (() => void) | undefined;
+
+function wirePreviewModes(refresh: () => void) {
+  app.querySelectorAll<HTMLElement>("[data-preview-mode]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = btn.getAttribute("data-preview-mode") as PreviewContentMode | null;
+      if (!next) return;
+      setPreviewContentMode(next);
+      app.querySelectorAll<HTMLElement>("[data-preview-mode]").forEach((b) => {
+        const on = b.getAttribute("data-preview-mode") === next;
+        b.classList.toggle("active", on);
+        b.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      refresh();
+    });
+  });
+}
 
 function mount(route: SelectedRoute) {
   unsub?.();
@@ -34,10 +57,12 @@ function mount(route: SelectedRoute) {
     return;
   }
 
-  app.innerHTML = wrapDemo(route, previewStageShell());
+  app.innerHTML = wrapDemo(route, previewStageShell(), previewContentModeToggleHtml());
   const mountEl = document.querySelector<HTMLElement>("#preview-stage");
   if (!mountEl) throw new Error("#preview-stage missing");
-  unsub = renderPreviewStack(cursor, mountEl);
+  const session = renderPreviewStack(cursor, mountEl);
+  wirePreviewModes(session.refresh);
+  unsub = session.dispose;
 }
 
 function onHash() {

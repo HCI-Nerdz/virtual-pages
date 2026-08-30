@@ -161,6 +161,18 @@ function modeToggleHtml(mode: PreviewContentMode): string {
   </div>`;
 }
 
+export function previewContentModeToggleHtml(): string {
+  return modeToggleHtml(contentMode);
+}
+
+export function getPreviewContentMode(): PreviewContentMode {
+  return contentMode;
+}
+
+export function setPreviewContentMode(mode: PreviewContentMode): void {
+  contentMode = mode;
+}
+
 function applyPack(stackEl: HTMLElement, count: number) {
   const first = stackEl.querySelector(".vp-preview-card") as HTMLElement | null;
   const cardW = first?.offsetWidth || CARD_W;
@@ -213,7 +225,6 @@ export function renderPreviewStack(cursor: DecisionCursor, mount: HTMLElement) {
       : `<span class="vp-preview-empty">At account root — no ancestors</span>`;
 
     mount.innerHTML = `<div class="vp-preview-layout">
-      ${modeToggleHtml(mode)}
       <div class="vp-preview-bar" id="preview-bar" aria-label="Ancestor page previews">
         <div class="vp-preview-stack" id="preview-stack">${stackInner}</div>
         <span class="vp-preview-flow" aria-hidden="true">→</span>
@@ -240,15 +251,6 @@ export function renderPreviewStack(cursor: DecisionCursor, mount: HTMLElement) {
       resizeObs = new ResizeObserver(() => relayout());
       resizeObs.observe(stack);
     }
-
-    mount.querySelectorAll<HTMLElement>("[data-preview-mode]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const next = btn.getAttribute("data-preview-mode") as PreviewContentMode | null;
-        if (!next || next === contentMode) return;
-        contentMode = next;
-        paint(cursor.stack);
-      });
-    });
 
     mount.querySelectorAll<HTMLElement>(".vp-preview-card").forEach((card) => {
       card.addEventListener("mouseenter", () => {
@@ -286,8 +288,11 @@ export function renderPreviewStack(cursor: DecisionCursor, mount: HTMLElement) {
 
   paint(cursor.stack);
   const unsub = cursor.subscribe(paint);
-  return () => {
-    resizeObs?.disconnect();
-    unsub();
+  return {
+    refresh: () => paint(cursor.stack),
+    dispose: () => {
+      resizeObs?.disconnect();
+      unsub();
+    },
   };
 }

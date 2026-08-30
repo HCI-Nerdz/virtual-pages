@@ -585,7 +585,50 @@ button {
 .vp-preview-layout {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.55rem;
+}
+
+.vp-preview-modes {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 0;
+  border: 1px solid #3a5560;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #132029;
+}
+
+.vp-preview-mode {
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border: 0;
+  background: transparent;
+  color: #9eb4be;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.vp-preview-mode + .vp-preview-mode {
+  border-left: 1px solid #3a5560;
+}
+
+.vp-preview-mode:hover {
+  color: #e2eef2;
+  background: #1a303a;
+}
+
+.vp-preview-mode.active {
+  background: #1f8a7a;
+  color: #f4fffc;
+}
+
+.vp-preview-mode-note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #8aa0aa;
+  max-width: 42rem;
 }
 
 .vp-preview-bar {
@@ -594,16 +637,20 @@ button {
   align-items: flex-end;
   justify-content: space-between;
   gap: 1rem;
-  min-height: 88px;
-  padding: 0.5rem 0.25rem 0.35rem;
+  min-height: 96px;
+  padding: 0.65rem 0.25rem 0.45rem;
 }
 
 .vp-preview-stack {
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: 78px;
+  min-height: 86px;
   flex: 1;
+  min-width: 0;
+  perspective: 920px;
+  perspective-origin: 85% 55%;
+  transform-style: preserve-3d;
 }
 
 .vp-preview-empty {
@@ -613,40 +660,55 @@ button {
 }
 
 .vp-preview-card {
+  --x: 0px;
+  --ry: 0deg;
   position: absolute;
-  left: var(--x);
+  left: 0;
   bottom: 0;
   z-index: var(--z);
   width: 118px;
-  height: 72px;
+  height: 78px;
   padding: 0.35rem;
   border: 1px solid #9eb0ba;
   border-radius: 10px;
   background: var(--paper);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.22);
+  /* Shadow under the whole card (chrome title + surface), not the inner pane alone */
+  box-shadow:
+    0 3px 0 rgba(15, 28, 36, 0.12),
+    0 8px 18px rgba(0, 0, 0, 0.32);
   cursor: pointer;
   text-align: left;
   color: var(--ink);
-  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease, filter 0.18s ease;
+  transform: translate3d(var(--x), 0, 0) rotateY(var(--ry));
+  transform-origin: right center;
+  transform-style: preserve-3d;
+  transition: box-shadow 0.18s ease, filter 0.18s ease, transform 0.28s ease;
 }
 
 .vp-preview-title {
   display: block;
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
   color: #4d616c;
   margin-bottom: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.vp-preview-mini {
+.vp-preview-surface {
   display: block;
-  height: 44px;
+  height: 48px;
   border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.vp-preview-snippet {
   background: #fff;
   padding: 0.25rem 0.35rem;
-  overflow: hidden;
 }
 
 .vp-preview-mini-h {
@@ -679,68 +741,140 @@ button {
   opacity: 0.7;
 }
 
+/* Faux screenshot surfaces */
+.vp-preview-shot {
+  background: linear-gradient(165deg, #f7fafc 0%, #e4ecf1 100%);
+  border: 1px solid #c5d2da;
+}
+
+.vp-shot-chrome {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 11px;
+  padding: 0 4px;
+  background: #d8e2e8;
+  border-bottom: 1px solid #c0ced6;
+}
+
+.vp-shot-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #9aadb8;
+}
+
+.vp-shot-url {
+  margin-left: 4px;
+  font-size: 0.42rem;
+  color: #6a7d88;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.vp-shot-body {
+  display: block;
+  position: relative;
+  height: calc(100% - 11px);
+  padding: 3px 5px 2px;
+}
+
+.vp-shot-title {
+  display: block;
+  font-size: 0.52rem;
+  font-weight: 700;
+  color: #243440;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.vp-shot-block {
+  display: block;
+  height: 4px;
+  margin-bottom: 2px;
+  border-radius: 1px;
+  background: #c9d6de;
+  width: 88%;
+}
+
+.vp-shot-block-short {
+  width: 62%;
+}
+
+.vp-shot-row {
+  display: block;
+  height: 6px;
+  margin-top: 3px;
+  border-radius: 2px;
+  background: #b7cdd0;
+  width: 46%;
+}
+
+.vp-shot-focus {
+  position: absolute;
+  left: var(--fx, 12%);
+  top: var(--fy, 36%);
+  width: 42%;
+  height: 38%;
+  border: 1.5px solid rgba(31, 138, 122, 0.85);
+  border-radius: 3px;
+  background: rgba(45, 184, 164, 0.18);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35);
+  pointer-events: none;
+}
+
+.vp-shot-caption {
+  position: absolute;
+  right: 3px;
+  bottom: 2px;
+  font-size: 0.4rem;
+  color: #7a909c;
+  opacity: 0.85;
+}
+
+.vp-preview-surface[data-tone="root"] {
+  box-shadow: inset 0 0 0 1px rgba(31, 138, 122, 0.25);
+}
+
+.vp-preview-surface[data-tone="leaf"] {
+  box-shadow: inset 0 0 0 1px rgba(196, 165, 116, 0.35);
+}
+
 .vp-preview-now {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: 0.95rem;
   color: #d5e6e2;
   white-space: nowrap;
+  flex-shrink: 0;
+  padding-bottom: 0.35rem;
 }
 
-/* Peek: raise hovered card; veil later siblings without shifting positions */
+/*
+ * Peek: raise z-index + modest whole-card shadow only.
+ * No scale/translate — keeps neighbor hit targets stable.
+ */
 .vp-preview-bar[data-peek] .vp-preview-card {
-  opacity: 0.35;
-  filter: brightness(0.75);
-}
-
-.vp-preview-bar[data-peek] .vp-preview-card::after {
-  content: "";
-  position: absolute;
-  inset: -8px;
-  border-radius: 14px;
-  background: var(--veil);
-  opacity: 0;
-  pointer-events: none;
-  z-index: -1;
+  filter: brightness(0.88);
 }
 
 .vp-preview-bar[data-peek="0"] .vp-preview-card[data-index="0"],
 .vp-preview-bar[data-peek="1"] .vp-preview-card[data-index="1"],
 .vp-preview-bar[data-peek="2"] .vp-preview-card[data-index="2"],
 .vp-preview-bar[data-peek="3"] .vp-preview-card[data-index="3"],
-.vp-preview-bar[data-peek="4"] .vp-preview-card[data-index="4"] {
-  opacity: 1;
+.vp-preview-bar[data-peek="4"] .vp-preview-card[data-index="4"],
+.vp-preview-bar[data-peek="5"] .vp-preview-card[data-index="5"],
+.vp-preview-bar[data-peek="6"] .vp-preview-card[data-index="6"] {
   filter: none;
-  transform: translateY(-10px) scale(1.06);
-  box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
   z-index: 40;
-}
-
-.vp-preview-bar[data-peek="0"] .vp-preview-card[data-index="0"]::after,
-.vp-preview-bar[data-peek="1"] .vp-preview-card[data-index="1"]::after,
-.vp-preview-bar[data-peek="2"] .vp-preview-card[data-index="2"]::after,
-.vp-preview-bar[data-peek="3"] .vp-preview-card[data-index="3"]::after,
-.vp-preview-bar[data-peek="4"] .vp-preview-card[data-index="4"]::after {
-  opacity: 1;
-  inset: -18px -12px -22px -12px;
-  z-index: -1;
-}
-
-/* Hide later cards in stack while peeking earlier ones */
-.vp-preview-bar[data-peek="0"] .vp-preview-card[data-index="1"],
-.vp-preview-bar[data-peek="0"] .vp-preview-card[data-index="2"],
-.vp-preview-bar[data-peek="0"] .vp-preview-card[data-index="3"],
-.vp-preview-bar[data-peek="0"] .vp-preview-card[data-index="4"],
-.vp-preview-bar[data-peek="1"] .vp-preview-card[data-index="2"],
-.vp-preview-bar[data-peek="1"] .vp-preview-card[data-index="3"],
-.vp-preview-bar[data-peek="1"] .vp-preview-card[data-index="4"],
-.vp-preview-bar[data-peek="2"] .vp-preview-card[data-index="3"],
-.vp-preview-bar[data-peek="2"] .vp-preview-card[data-index="4"],
-.vp-preview-bar[data-peek="3"] .vp-preview-card[data-index="4"] {
-  opacity: 0;
-  pointer-events: none;
+  box-shadow:
+    0 4px 0 rgba(15, 28, 36, 0.14),
+    0 10px 22px rgba(0, 0, 0, 0.38);
 }
 
 .vp-preview-front {
@@ -748,19 +882,6 @@ button {
   background: var(--paper-front);
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
   animation: vp-rise 0.3s ease;
-}
-
-.vp-preview-front .vp-page-face,
-.vp-preview-front > .vp-crumb,
-.vp-preview-front > .vp-prompt,
-.vp-preview-front > .vp-page-title,
-.vp-preview-front > .vp-body,
-.vp-preview-front > .vp-choices,
-.vp-preview-front > .vp-leaf-note {
-  /* padding via wrapper */
-}
-
-.vp-preview-front {
   padding: 1.1rem 1.2rem 1.25rem;
 }
 
@@ -829,6 +950,10 @@ button {
 
   .vp-preview-card {
     width: 96px;
-    height: 64px;
+    height: 70px;
+  }
+
+  .vp-preview-surface {
+    height: 42px;
   }
 }

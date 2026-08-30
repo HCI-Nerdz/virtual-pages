@@ -39,8 +39,9 @@ const ROUTES: RouteMeta[] = [
     label: "Preview stack",
     title: "Top-bar preview stack",
     blurb:
-      "Same facsimile frame. One virtual page in the stage; ancestors live as rounded preview cards stacked left→right in the top bar (earliest at the bottom of the z-stack). " +
-      "Hover raises that card and drops a dark veil so later cards hide without shifting layout. Click a card to jump.",
+      "Same facsimile frame. Ancestors sit in the top bar as preview cards — lined up when there is room, Cover Flow–style overlap (Y-axis tilt, nearest ancestors more open) when the bar fills. " +
+      "Toggle Snippets (literal text) vs Screenshots (faux page captures; real product would frame around the last click). " +
+      "Hover lifts z-index with a modest shadow — no zoom that steals neighbor hits. Click a card to jump.",
   },
   {
     id: "contrast",

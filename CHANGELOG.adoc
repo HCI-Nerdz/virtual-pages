@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-08-30 -- Preview stack Cover Flow + content modes
+
+* Preview cards line up when the bar has room; overlap only when packed, with nearer ancestors more open and left cards Y-rotated (Cover Flow spines).
+* Snippets vs Screenshots toggle inside the Preview stack variant — text snippets, or faux page captures with a mock “around last click” focus region.
+* Hover peek no longer scales or translates (neighbor hit targets stay stable); whole-card shadow is modest; oversized dark veil removed.
+
 == 2026-08-30 -- Edge peeks in a facsimile frame
 
 * Parent layers are thin labeled edge tabs inside a clipped simulated app bezel — not full blank sheets over the demo hub.

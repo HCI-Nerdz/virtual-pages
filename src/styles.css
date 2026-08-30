@@ -177,17 +177,20 @@ button {
   border-radius: 2px 2px 0 0;
 }
 
-/* Compact per-variant mockups (~3 columns) */
+/* Compact per-variant mockups (~3 columns; fixed tile width when stacked) */
 .demo-mock-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.75rem;
   margin: 0 0 1rem;
+  justify-items: start;
 }
 
 .demo-mock-tile {
   display: grid;
   gap: 0.35rem;
+  width: 100%;
+  max-width: 20rem;
   padding: 0.5rem 0.5rem 0.65rem;
   border: 1px solid #2f4a54;
   border-radius: 10px;
@@ -1109,6 +1112,12 @@ button {
 @media (max-width: 720px) {
   .demo-mock-grid {
     grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .demo-mock-tile {
+    /* Keep the same footprint as one desktop 3-column tile */
+    max-width: 20rem;
   }
 }
 

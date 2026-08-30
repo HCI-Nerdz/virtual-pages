@@ -1,5 +1,14 @@
 = Changelog
 
+== 2026-08-30 -- Tab bar, mockup chooser, clean facsimile
+
+* Variant titles are a real tab bar; compact per-variant mockups (~3 columns) also select the demo.
+* Demo zone stays a placeholder until a tab or mockup is chosen (deep links still mount that variant).
+* Preview stack shows hierarchy arrows between cards and into the current page.
+* Northbazaar facsimile uses a distinct forest/paper palette so product faces do not read as HCI hub chrome.
+* Tour-guide captions removed from inside the facsimile; teaching stays in hub / variant blurbs.
+* Soft/Hard badges quieted to in-product chips.
+
 == 2026-08-30 -- Preview stack Cover Flow + content modes
 
 * Preview cards line up when the bar has room; overlap only when packed, with nearer ancestors more open and left cards Y-rotated (Cover Flow spines).

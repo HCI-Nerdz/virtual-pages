@@ -24,8 +24,8 @@ function escapeHtml(s: string): string {
 
 function transportBadge(node: DecisionNode): string {
   const kind = node.transport ?? "soft";
-  const label = kind === "hard" ? "hard load" : "soft route";
-  return `<span class="vp-transport" data-kind="${kind}" title="${kind === "hard" ? "Full document navigation" : "In-app route — no full page reload"}">${label}</span>`;
+  const label = kind === "hard" ? "Hard" : "Soft";
+  return `<span class="vp-transport" data-kind="${kind}">${label}</span>`;
 }
 
 function breadcrumbHtml(path: DecisionPath): string {
@@ -57,8 +57,7 @@ function choiceList(node: DecisionNode): string {
 }
 
 export function previewStageShell(): string {
-  return facsimileShell(`<div class="armed-zone" aria-label="Armed virtual-pages subtree">
-    <p class="armed-label">Armed subtree · preview stack in the top bar</p>
+  return facsimileShell(`<div class="armed-zone" aria-label="Account settings">
     <div class="preview-stage" id="preview-stage"></div>
   </div>`);
 }
@@ -162,25 +161,31 @@ function modeToggleHtml(mode: PreviewContentMode): string {
   </div>`;
 }
 
-function modeNote(mode: PreviewContentMode): string {
-  if (mode === "shots") {
-    return `<p class="vp-preview-mode-note">Demo mock of page-preview imagery. A real product would capture around the last click — the bright region stands in for that focus.</p>`;
-  }
-  return `<p class="vp-preview-mode-note">Literal text snippets from each ancestor page — title and prompt, not a capture.</p>`;
-}
-
 function applyPack(stackEl: HTMLElement, count: number) {
   const first = stackEl.querySelector(".vp-preview-card") as HTMLElement | null;
   const cardW = first?.offsetWidth || CARD_W;
   const width = Math.max(cardW, stackEl.clientWidth || 480);
   const layouts = packPreviewCards(count, width, cardW);
+  const lined = layouts.every((l) => l.rotateY === 0);
   stackEl.querySelectorAll<HTMLElement>(".vp-preview-card").forEach((card, i) => {
     const L = layouts[i];
     if (!L) return;
     card.style.setProperty("--x", `${L.x}px`);
     card.style.setProperty("--ry", `${L.rotateY}deg`);
   });
-  stackEl.setAttribute("data-packed", layouts.some((l) => l.rotateY !== 0) ? "overlap" : "line");
+  stackEl.querySelectorAll<HTMLElement>(".vp-preview-arrow").forEach((arrow) => {
+    const i = Number(arrow.getAttribute("data-after") ?? "-1");
+    const left = layouts[i];
+    const right = layouts[i + 1];
+    if (!left || !right) {
+      arrow.style.opacity = "0";
+      return;
+    }
+    const mid = lined ? left.x + cardW + (right.x - left.x - cardW) / 2 : left.x + Math.max(10, (right.x - left.x) * 0.55);
+    arrow.style.setProperty("--ax", `${mid}px`);
+    arrow.style.opacity = lined || right.x - left.x > 28 ? "1" : "0.35";
+  });
+  stackEl.setAttribute("data-packed", lined ? "line" : "overlap");
 }
 
 export function renderPreviewStack(cursor: DecisionCursor, mount: HTMLElement) {
@@ -194,15 +199,24 @@ export function renderPreviewStack(cursor: DecisionCursor, mount: HTMLElement) {
     const ancestors = path.slice(0, -1);
     const mode = contentMode;
     const provisional = packPreviewCards(ancestors.length, 480);
-    const cards = ancestors
-      .map((n, i) => previewCard(n, i, provisional[i] ?? { x: i * 14, rotateY: 0 }, mode, ancestors.length))
-      .join("");
+    const stackInner = ancestors.length
+      ? ancestors
+          .map((n, i) => {
+            const card = previewCard(n, i, provisional[i] ?? { x: i * 14, rotateY: 0 }, mode, ancestors.length);
+            const arrow =
+              i < ancestors.length - 1
+                ? `<span class="vp-preview-arrow" aria-hidden="true" data-after="${i}">›</span>`
+                : "";
+            return card + arrow;
+          })
+          .join("")
+      : `<span class="vp-preview-empty">At account root — no ancestors</span>`;
 
     mount.innerHTML = `<div class="vp-preview-layout">
       ${modeToggleHtml(mode)}
-      ${modeNote(mode)}
       <div class="vp-preview-bar" id="preview-bar" aria-label="Ancestor page previews">
-        <div class="vp-preview-stack" id="preview-stack">${cards || `<span class="vp-preview-empty">At armed root — no ancestors</span>`}</div>
+        <div class="vp-preview-stack" id="preview-stack">${stackInner}</div>
+        <span class="vp-preview-flow" aria-hidden="true">→</span>
         <span class="vp-preview-now">${escapeHtml(current.shortTitle)}</span>
       </div>
       <div class="vp-preview-front" data-tone="${current.tone ?? "branch"}">

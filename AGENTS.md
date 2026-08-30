@@ -11,6 +11,14 @@ Org catalog: https://hci-nerdz.github.io/demos/
 - **soft / hard** — SPA vs document transport; chrome is transport-agnostic
 - **vpages** — aspirational browser feature name (see `docs/browser-vpages.adoc`)
 
+## Related ideas
+
+Sibling HCI-Nerdz desk: **Edge Bar** (repo `context-rails`) — edge-summoned ecosystem nav. A possible umbrella name for both is **context edges** (edge as persistent context chrome). Repos stay separate; do not rename.
+
+## Hub UX (multi-variant)
+
+Tab bar + compact per-variant mockups (clickable); demo zone stays a placeholder until chosen. Pattern recorded in skill `demo-site-wiring`.
+
 ## Stakeholders
 
 | Org | Role |
@@ -21,6 +29,7 @@ Org catalog: https://hci-nerdz.github.io/demos/
 
 ## Demo routes
 
+- `#/` — hub only (placeholder until a variant is chosen)
 - `#/edge` — edge layers
 - `#/preview` — preview stack
 - `#/contrast` — flat mega-panel

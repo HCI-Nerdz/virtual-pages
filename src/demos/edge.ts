@@ -11,8 +11,8 @@ function escapeHtml(s: string): string {
 
 function transportBadge(node: DecisionNode): string {
   const kind = node.transport ?? "soft";
-  const label = kind === "hard" ? "hard load" : "soft route";
-  return `<span class="vp-transport" data-kind="${kind}" title="${kind === "hard" ? "Full document navigation" : "In-app route — no full page reload"}">${label}</span>`;
+  const label = kind === "hard" ? "Hard" : "Soft";
+  return `<span class="vp-transport" data-kind="${kind}">${label}</span>`;
 }
 
 function routeLine(node: DecisionNode): string {
@@ -68,13 +68,11 @@ function edgeParents(path: DecisionPath): DecisionPath {
 /** Facsimile app frame — virtual pages stay inside this clip, not over the HCI demo hub. */
 export function facsimileShell(inner: string): string {
   return `<div class="facsimile-desk">
-  <p class="facsimile-caption">Simulated app viewport — virtual pages are clipped here, not over the demo hub</p>
   <div class="facsimile-bezel">
     <div class="market-shell">
       <header class="market-top">
         <span class="market-mark">Northbazaar</span>
         <span class="market-links">Deals · Cart · Help</span>
-        <span class="market-note">Marketing chrome — outside the armed zone</span>
       </header>
       ${inner}
     </div>
@@ -83,8 +81,7 @@ export function facsimileShell(inner: string): string {
 }
 
 export function edgeStageShell(): string {
-  return facsimileShell(`<div class="armed-zone" aria-label="Armed virtual-pages subtree">
-    <p class="armed-label">Armed subtree · decision backbone · parent edges only</p>
+  return facsimileShell(`<div class="armed-zone" aria-label="Account settings">
     <div class="edge-stage" id="edge-stage"></div>
   </div>`);
 }

@@ -2,7 +2,7 @@ import { DecisionCursor } from "./core/cursor";
 import { marketplaceSettingsTree } from "./core/marketplace-tree";
 import { contrastHtml } from "./demos/contrast";
 import { edgeStageShell, renderEdgeStack } from "./demos/edge";
-import { parseRoute, wrapDemo, type DemoRoute } from "./demos/nav";
+import { parseRoute, placeholderStage, wrapDemo, type SelectedRoute } from "./demos/nav";
 import { previewStageShell, renderPreviewStack } from "./demos/preview";
 
 const app = document.querySelector("#app");
@@ -10,9 +10,14 @@ if (!app) throw new Error("#app missing");
 
 let unsub: (() => void) | undefined;
 
-function mount(route: DemoRoute) {
+function mount(route: SelectedRoute) {
   unsub?.();
   unsub = undefined;
+
+  if (route == null) {
+    app.innerHTML = wrapDemo(null, placeholderStage());
+    return;
+  }
 
   if (route === "contrast") {
     app.innerHTML = wrapDemo(route, contrastHtml(marketplaceSettingsTree));

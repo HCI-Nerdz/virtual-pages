@@ -7,6 +7,8 @@ Live: link:https://hci-nerdz.github.io/virtual-pages/[hci-nerdz.github.io/virtua
 
 Org demos index: link:https://hci-nerdz.github.io/demos/[hci-nerdz.github.io/demos/]
 
+Related HCI-Nerdz desk: link:https://hci-nerdz.github.io/context-rails/[Edge Bar] (`context-rails`) — edge-summoned ecosystem nav. A possible shared umbrella is **context edges**; repos stay separate.
+
 == Why
 
 Mega-directories on one page overload working memory. They often persist because fewer *full document* loads look cheaper on a spreadsheet. That cost argument weakens once each option has a **route name** and most steps are **soft** (in-app) navigations — same payload discipline, less scanning bleed, shareable URLs.
@@ -14,6 +16,8 @@ Mega-directories on one page overload working memory. They often persist because
 Virtual-pages chrome does not care whether the next step arrived as a soft route or a hard document load. Soft and hard steps share one stack so users do not learn two nav languages.
 
 == Variants
+
+Hub uses a real **tab bar** plus **compact clickable mockups** (about three columns on desktop). The interactive desk stays a **placeholder until you choose** a tab or mockup (deep links like `#/edge` still open that variant).
 
 [cols="1,2",options="header"]
 |===
@@ -23,13 +27,13 @@ Virtual-pages chrome does not care whether the next step arrived as a soft route
 | Parent steps as shadowed page edges; breadcrumb inside the front page; left strip / edge click to climb
 
 | `#/preview`
-| Single front page; ancestor previews in a top-bar stack; hover peek raises a card and veils later cards without shifting layout
+| Single front page; ancestor previews in a top-bar stack; arrows between cards; hover peek raises a card without shifting layout
 
 | `#/contrast`
 | Same tree as a flat mega-panel (cognitive bleed / CFO-layout contrast)
 |===
 
-Demo starts deep on the Orders → return path so the stack is already visible.
+Interactive variants start deep on the Orders → return path so the stack is already visible once mounted.
 
 == Naming
 
@@ -38,6 +42,7 @@ Demo starts deep on the Orders → return path so the stack is already visible.
 | decision backbone | The route subtree / decision model |
 | soft / hard | Transport: SPA-style vs full document — same chrome |
 | vpages | Likely browser-shorthand if this becomes a platform feature |
+| context edges | Optional umbrella with Edge Bar — not a rename |
 
 Authoritative web demo + idea: **HCI-Nerdz**. Framework ports (e.g. dlang-supplemental **dui/dew**) can follow; browser-native subpage capture / VT-like transitions are a separate Chromium/Firefox conversation — see link:docs/browser-vpages.adoc[docs/browser-vpages.adoc].
 

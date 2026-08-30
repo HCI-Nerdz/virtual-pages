@@ -25,8 +25,7 @@ export function contrastHtml(tree: DecisionTree): string {
     })
     .join("");
 
-  return facsimileShell(`<div class="flat-bleed" aria-label="Flat settings contrast">
-    <p class="flat-warn">Contrast mode: every node visible at once — the mega-directory pattern. Same destinations can be soft-routed as virtual pages without multiplying full document loads; hard loads (PDF, armed-zone entry) still join the same stack.</p>
+  return facsimileShell(`<div class="flat-bleed" aria-label="Account settings directory">
     <div class="flat-grid">${sections}</div>
   </div>`);
 }

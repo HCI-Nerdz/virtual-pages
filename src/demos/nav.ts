@@ -6,6 +6,8 @@ export type DemoRoute = "edge" | "preview" | "contrast";
 export type SelectedRoute = DemoRoute | null;
 
 const DEMOS_INDEX = "https://hci-nerdz.github.io/demos/";
+/** Site home for this demo (Pages / suite root) — identity strip is site nav only. */
+const SITE_HOME = import.meta.env.BASE_URL;
 const REPO_URL = "https://github.com/HCI-Nerdz/virtual-pages";
 const ORG_LABEL = "HCI-Nerdz";
 const REPO_LABEL = "virtual-pages";
@@ -137,7 +139,7 @@ export function hubHtml(active: SelectedRoute, previewModesHtml = ""): string {
   <p class="demo-identity">
     <a href="${DEMOS_INDEX}">${ORG_LABEL}</a>
     <span class="demo-hub-sep" aria-hidden="true">/</span>
-    <a href="${REPO_URL}">${REPO_LABEL}</a>
+    <a href="${SITE_HOME}">${REPO_LABEL}</a>
     <span class="sim-badge" title="Interactive mock">DEMO</span>
   </p>
   <p class="demo-vcs">

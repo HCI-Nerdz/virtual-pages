@@ -1,5 +1,10 @@
 = Changelog
 
+== 2026-08-30 -- Identity strip is site nav only
+
+* Hub breadcrumb `HCI-Nerdz / virtual-pages`: org → demos index, repo → this demo's site home (not GitHub).
+* GitHub remains only on the VCS logo line under the strip.
+
 == 2026-08-30 -- Variant tabs align with mockups
 
 * Tab bar uses the same three-column grid as the mockup tiles so each tab lines up with its card.

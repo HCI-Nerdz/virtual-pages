@@ -1,0 +1,60 @@
+= virtual-pages
+:description: Decision-backbone UX — virtual page layers and SPA/hard-route blend for deep subtrees.
+
+Interactive explainer for **virtual pages** (chrome) on a **decision backbone** (model): parent steps stay as layered context while the user makes one choice at a time.
+
+Live: link:https://hci-nerdz.github.io/virtual-pages/[hci-nerdz.github.io/virtual-pages]
+
+Org demos index: link:https://hci-nerdz.github.io/demos/[hci-nerdz.github.io/demos/]
+
+== Why
+
+Mega-directories on one page overload working memory. They often persist because fewer *full document* loads look cheaper on a spreadsheet. That cost argument weakens once each option has a **route name** and most steps are **soft** (in-app) navigations — same payload discipline, less scanning bleed, shareable URLs.
+
+Virtual-pages chrome does not care whether the next step arrived as a soft route or a hard document load. Soft and hard steps share one stack so users do not learn two nav languages.
+
+== Variants
+
+[cols="1,2",options="header"]
+|===
+| Route | What it shows
+
+| `#/edge`
+| Parent steps as shadowed page edges; breadcrumb inside the front page; left strip / edge click to climb
+
+| `#/preview`
+| Single front page; ancestor previews in a top-bar stack; hover peek raises a card and veils later cards without shifting layout
+
+| `#/contrast`
+| Same tree as a flat mega-panel (cognitive bleed / CFO-layout contrast)
+|===
+
+Demo starts deep on the Orders → return path so the stack is already visible.
+
+== Naming
+
+| Term | Role |
+| virtual pages | Presentation chrome (layers, preview stack) |
+| decision backbone | The route subtree / decision model |
+| soft / hard | Transport: SPA-style vs full document — same chrome |
+| vpages | Likely browser-shorthand if this becomes a platform feature |
+
+Authoritative web demo + idea: **HCI-Nerdz**. Framework ports (e.g. dlang-supplemental **dui/dew**) can follow; browser-native subpage capture / VT-like transitions are a separate Chromium/Firefox conversation — see link:docs/browser-vpages.adoc[docs/browser-vpages.adoc].
+
+== Run locally
+
+[source,bash]
+----
+pnpm install
+pnpm dev
+----
+
+Opens http://localhost:5180/ (Vite). Production base path is `/virtual-pages/`.
+
+== Changelog
+
+See link:CHANGELOG.adoc[CHANGELOG.adoc].
+
+== License
+
+MIT

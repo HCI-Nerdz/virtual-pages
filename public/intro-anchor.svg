@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Virtual pages edge layers</title>
+  <desc id="desc">Account and Orders peek from the left behind the current Return page, with an in-page breadcrumb and soft-route badge.</desc>
+  <defs>
+    <linearGradient id="desk" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f1c24"/>
+      <stop offset="100%" stop-color="#16303a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect width="960" height="540" fill="url(#desk)"/>
+  <text x="48" y="52" fill="#c4a574" font-family="Segoe UI, Helvetica, sans-serif" font-size="22" font-weight="700">Northbazaar</text>
+  <text x="200" y="52" fill="#6d8792" font-family="Segoe UI, Helvetica, sans-serif" font-size="13">marketing chrome · outside armed zone</text>
+  <rect x="40" y="72" width="880" height="430" rx="14" fill="#12262e" stroke="#2f4a54"/>
+  <text x="60" y="102" fill="#2db8a4" font-family="Segoe UI, Helvetica, sans-serif" font-size="12" letter-spacing="1.5">ARMED SUBTREE · DECISION BACKBONE</text>
+
+  <!-- back edge Account -->
+  <g filter="url(#shadow)" transform="translate(70,130) scale(0.94)">
+    <rect width="620" height="320" rx="12" fill="#d5dee4"/>
+    <text x="28" y="42" fill="#5a6f7a" font-family="Segoe UI, Helvetica, sans-serif" font-size="14">Account</text>
+    <text x="28" y="78" fill="#1a2430" font-family="Segoe UI, Helvetica, sans-serif" font-size="26" font-weight="700">Your account</text>
+  </g>
+  <!-- mid edge Orders -->
+  <g filter="url(#shadow)" transform="translate(100,145) scale(0.97)">
+    <rect width="620" height="320" rx="12" fill="#e0e7eb"/>
+    <text x="28" y="42" fill="#5a6f7a" font-family="Segoe UI, Helvetica, sans-serif" font-size="14">Orders</text>
+    <text x="28" y="78" fill="#1a2430" font-family="Segoe UI, Helvetica, sans-serif" font-size="26" font-weight="700">Your orders</text>
+  </g>
+  <!-- front Return -->
+  <g filter="url(#shadow)" transform="translate(140,160)">
+    <rect width="620" height="300" rx="12" fill="#f4f7f9"/>
+    <text x="28" y="36" fill="#1f8a7a" font-family="Segoe UI, Helvetica, sans-serif" font-size="13">Account / Orders / #1042 / Return</text>
+    <rect x="28" y="50" width="210" height="22" rx="4" fill="#dfe8ec"/>
+    <text x="36" y="65" fill="#2a3d48" font-family="Consolas, monospace" font-size="11">/account/orders/1042/return</text>
+    <rect x="248" y="50" width="72" height="22" rx="11" fill="#c8efe8"/>
+    <text x="258" y="65" fill="#0d5c52" font-family="Segoe UI, Helvetica, sans-serif" font-size="10" font-weight="700">SOFT ROUTE</text>
+    <text x="28" y="108" fill="#5a6f7a" font-family="Segoe UI, Helvetica, sans-serif" font-size="12" letter-spacing="1">WHICH ITEMS GO BACK?</text>
+    <text x="28" y="148" fill="#1a2430" font-family="Segoe UI, Helvetica, sans-serif" font-size="28" font-weight="700">Return items  #1042</text>
+    <rect x="28" y="180" width="360" height="44" rx="8" fill="#fff" stroke="#c5d0d7"/>
+    <text x="44" y="207" fill="#1a2430" font-family="Segoe UI, Helvetica, sans-serif" font-size="14" font-weight="600">Both mugs  wrong color</text>
+    <rect x="28" y="236" width="360" height="44" rx="8" fill="#fff" stroke="#c5d0d7"/>
+    <text x="44" y="263" fill="#1a2430" font-family="Segoe UI, Helvetica, sans-serif" font-size="14" font-weight="600">One mug  chipped</text>
+  </g>
+</svg>

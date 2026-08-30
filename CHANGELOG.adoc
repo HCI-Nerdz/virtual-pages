@@ -1,0 +1,15 @@
+= Changelog
+
+== 2026-08-30 -- Soft/hard transport on one backbone
+
+* Decision nodes carry `route` plus `transport` (`soft` | `hard`).
+* Edge and preview faces show the route and a soft/hard badge — PDF/invoice stays a hard step inside the same stack.
+* Suite copy frames mega-pages as a cost myth once SPA routes exist; flat contrast variant calls that out.
+
+== 2026-08-30 -- Virtual pages desk
+
+* Edge-layered virtual pages (1–2 parent edges, in-page breadcrumb, left up-strip).
+* Top-bar preview stack with hover peek (raise + dark veil; later cards hide without layout shift).
+* Flat mega-panel contrast; marketing shell outside an armed settings subtree.
+* Hub chrome: org/repo identity, GitHub VCS line, suite lede, intro anchor SVG, variant switcher.
+* GitHub Pages workflow at `/virtual-pages/`.

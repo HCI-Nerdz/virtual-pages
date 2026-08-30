@@ -1,0 +1,24 @@
+= Browser-native virtual pages (vpages)
+:description: Why subpage capture and stack transitions belong in the browser — notes for Chromium / Firefox discussion.
+
+== Problem
+
+App authors recreate decision-stack chrome (parent context, breadcrumbs, transitions) per framework.
+View-transition style capture today screenshots whole documents.
+Virtual-pages animations want the **armed subtree surface** only — otherwise stacks of full-page bitmaps punish memory and bandwidth.
+
+== Desired platform shape (sketch)
+
+* A way to mark an **armed region** (subtree / packing context) as the transition root for stack navigations.
+* Soft navigations and hard navigations can both push/pop that stack so one chrome model covers both.
+* Optional browser-managed **ancestor surface snapshots** for peek/edge chrome — capped, evicted, not app-owned screenshot farms.
+* Prefer a self-explanatory name in developer docs (*virtual pages* / *decision stack*); short internal ID may become `vpages`.
+
+== What this repo does today
+
+Web mock only: CSS layering + SPA cursor. No real View Transition API integration yet.
+Do not block HCI demos on browser consensus.
+
+== Status
+
+Idea capture for future Chromium / Firefox / WebKit conversation — not a shipped proposal document.

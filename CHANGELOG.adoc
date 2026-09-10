@@ -1,5 +1,11 @@
 = Changelog
 
+== 2026-09-10 — Crawlability + no-JS fallback
+
+* Added `public/robots.txt` and `public/sitemap.xml` listing hub, Edge, Preview, and Contrast entrypoints.
+* Each multi-page `index.html` includes title, meta description, h1, and a short purpose paragraph inside `#app` for no-JS / raw-HTML readers.
+
+
 == 2026-08-30 -- Selector hub with separate variant pages
 
 * Landing page is a selector only; Edge / Preview / Contrast each have their own URL (`/edge/`, `/preview/`, `/contrast/`).

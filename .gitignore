@@ -25,3 +25,5 @@ dist/
 !public/**
 !docs/
 !docs/**
+!/.editorconfig
+!/.gitattributes
